@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lịch sử cược</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+  <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/dist/css/adminlte.min.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <%- include('nav') %>
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Lịch sử cược</h1>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+
+      <div class="form-group" style="text-align: center">
+        <input type="text" id="search" placeholder="Nhập SĐT hoặc Email thành viên" />
+      </div>
+
+      <!-- Main content -->
+      <section class="content">
+        <!-- Default box -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Lịch sử cược</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body p-0" style="overflow-y: hidden">
+            <table class="table table-striped projects" id="table1">
+              <thead>
+                <tr>
+                  <th class="text-center">#</th>
+                  <th class="text-center">Giai đoạn</th>
+                  <th class="text-center">Cược</th>
+                  <th class="text-center">Số tiền cược</th>
+                  <th class="text-center">Thắng</th>
+                  <th class="text-center">Time Cược</th>
+                  <th class="text-center">Time kết thúc</th>
+                  <th class="text-center"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (history.length > 0) { %> <% for (var i = 0; i <
+                  history.length; i++) { %>
+                <tr class="text-center">
+                  <td id="<%=history[i].id%>"><%=history[i].id%></td>
+                  <td>
+                    <b style="color: #2003db"><%=history[i].phone_login%></b>
+                  </td>
+                  <td style="min-width: 250px">
+                    <b style="color: #3498db;"><%=history[i].name_user%></b>
+                  </td>
+                  <% if (info[0].lever == "boss") { %> 
+                  <td>
+                    <b><%=history[i].lever%></b>
+                  </td>
+                  <% } %>
+                  <td>
+                    <b><%=String(history[i].money).replace(/(\d)(?=(\d{3})+(?!\d))/g,
+                        '$1,');%></b>
+                  </td>
+                  <td style="min-width: 128px">
+                    <b><%=String(history[i].total_money).replace(/(\d)(?=(\d{3})+(?!\d))/g,
+                        '$1,');%></b>
+                  </td>
+                  <% if (history[i].status == 0) { %>
+                  <td class="project-state">
+                    <span class="badge badge-warning">Waiting...</span>
+                  </td>
+                  <% } %> <% if (history[i].status_login == 0) { %>
+                  <td class="project-state">
+                    <span class="badge badge-warning">Offline</span>
+                  </td>
+                  <% } %> <% if (history[i].status_login == 1) { %>
+                  <td class="project-state">
+                    <span class="badge badge-success">Online</span>
+                  </td>
+                  <% } %> <% if (info[0].lever == "boss") { %>
+                  <td class="project-actions text-center" style="min-width: 260px">
+                    <!-- xác nhận -->
+                    <a class="btn btn-primary btn-sm confirm-btn" href="/manage/admin/profile/<%=history[i].phone_login%>"><i class="fas fa-folder"></i> Views</a>
+                    <!-- ? -->
+                    <a class="btn btn-info btn-sm" href="#"><i class="fas fa-pencil-alt"></i> Edit</a>
+                    <!-- Xóa -->
+                    <a class="btn btn-danger btn-sm delete-btn" href="#"><i class="fas fa-trash"></i> Delete</a>
+                  </td>
+                  <% } %>
+                </tr>
+                <% } %> <% } %>
+              </tbody>
+            </table>
+          </div>
+          <nav aria-label="Page navigation example" style="margin-top: 20px; display: flex; justify-content: center">
+            <ul class="pagination table1">
+              <li class="page-item previous">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+              </li>
+              <div id="numbers" style="display: flex"></div>
+              <li class="page-item next">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script src="/plugins/jquery/jquery.min.js"></script>
+  <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/dist/js/adminlte.min.js"></script>
+  <script src="/js/admin.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+  <script src="/js/tables.js"></script>
+</body>
+
+</html>
